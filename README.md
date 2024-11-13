@@ -5,10 +5,10 @@ Under [Tristan Cazenave](https://www.lamsade.dauphine.fr/~cazenave/index.php) su
 
 ## Introduction:
 
-The goal of this internship was to get a better neural network for AstraZenecca's Aizynthfinder.  Aizynthfinder is a retrosynthesis tool meaning it gives you the possible ways you could successively combine available or cheap precursors in order to get a target molecule. The results are given as trees, where the leaves are irreducible molecules and the root is the target molecules. A successful decomposition is one where all leaves are availables or cheap to get. 
+The goal of this internship was to get a better neural network for AstraZenecca's Aizynthfinder. Aizynthfinder is a retrosynthesis tool meaning it gives you the possible ways you could successively combine available or cheap precursors in order to get a target molecule. The results are given as trees, where the leaves are irreducible molecules and the root is the target molecules. A successful decomposition is one where all leaves are availables or cheap to get. 
 The neural network is used to guide a Monte Carlo tree search by providing likely decompositions of a molecule into smaller parts.
 
-To train the new model I used [Aizynthtrain](https://github.com/MolecularAI/aizynthtrain/tree/main). A collection of routines, pipelines and configurations for the training of Aizynthfinder's models. The models are trained on a library of known reaction templates (A template essentially captures the gist of a reaction, leaving the non interacting parts as variables) extracted from the US Patent Office (USPTO) dataset. 
+To train the new model I used [Aizynthtrain](https://github.com/MolecularAI/aizynthtrain/tree/main). A collection of routines, pipelines and configurations for the training of Aizynthfinder's models (This markdown includes code snippets from the two Aizynthtrain's files I modified the most) . The models are trained on a library of known reaction templates (A template essentially captures the gist of a reaction, leaving the non interacting parts as variables) extracted from the US Patent Office (USPTO) dataset. 
 
 ### The main problem :
 
@@ -86,6 +86,8 @@ Therefore I switched to a Feed Forward network with input of size 2048 and outpu
 
 A second way I reduced memory usage and inference time was throught the use of a projection of the input on the dimensions $k \times d\_model$ instead of  $n \times d\_model$ where $n > k$ before passing it to compute the key and value matrix in the multihead attention operation. 
 
+*(from the training.py file)*
+
 ````python
 class BaseAttention(Layer):  
     def __init__(self,*,dropout,num_word,k,**kwargs):  
@@ -116,6 +118,8 @@ class LinAttention(BaseAttention):
 This change was inspired by the [Linformer](https://arxiv.org/pdf/2006.04768) paper where they demonstrated that self attention can be well approximated by projecting the key and value matrix onto a space of lower dimension. 
 
 To train the model I switched to adam with weight decay. I also wanted to use cosine decay with warm restart but Tensorflow 2.8 does not support it so I reimplemented an approximation. 
+
+*(from the keras_utils.py file)*
 
 ````python 
 class WarmUpLearningRateScheduler(LearningRateSchedule):  
