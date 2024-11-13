@@ -15,8 +15,8 @@ To train the new model I used [Aizynthtrain](https://github.com/MolecularAI/aizy
 Initially, my colleague (a final-year graduate student student) and I thought it would be easy to obtain better prediction results as the model used was a simple MLP with one hidden layer and L2 regularization. We quickly realized that even with more complex architecture achieving a better score on the training data was challenging. Investigating deeper we discovered that the original dataset was very imbalanced. Below are a few visualizations of this problem :
 
 
-![[Images/Pasted image 20241025202233.png]]
-![[Images/Pasted image 20241025202409.png]]
+![description](Images/img2.png)
+![description](Images/img4.png)
 
 
 
@@ -34,7 +34,7 @@ After obtaining all the trees from those processes I then extracted reactions fr
 
 Finally I mixed the original and synthetic dataset. This improved the repartition without any further selection. I suspect this is due to the exploration element of MCTS finding examples where underrepresented templates perform well, resulting in a more balanced dataset.  
 
-![[Images/Pasted image 20241025202307.png]]
+![description](Images/img3.png)
 
 
 ### Improvements:
@@ -155,7 +155,7 @@ where $x$ is the number of steps
 
 which in practice gives :
 
-![[Images/Pasted image 20241025204740.png]]
+![description](Images/img5.png)
 
 
 Using this learning rate scheduler coupled with an initial warm up led to faster convergence in training compared to the original method of reducing the learning rate when plateauing. 
