@@ -153,7 +153,7 @@ class WarmUpLearningRateScheduler(LearningRateSchedule):
 
 with the parameter value I used for training the model this gives us (ignoring the linear warm up): 
 
-$\left(6e-5\right)\left(\cos\left(\pi\operatorname{mod}\left(\frac{x}{40000+200\sqrt{x}},0.5\right)\right)\right)\left(-\frac{1}{6\cdot10^{5}}x+1\right)$
+$\left(6e-5\right)\left(\cos\left(\pi\mod\left(\frac{x}{40000+200\sqrt{x}},0.5\right)\right)\right)\left(-\frac{1}{6\cdot10^{5}}x+1\right)$
 
 where $x$ is the number of steps
 
